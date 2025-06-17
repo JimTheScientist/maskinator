@@ -50,7 +50,6 @@ public class Grid extends JPanel {
 
     public void zoom(double factor) {
         this.zoomFactor *= factor;
-        Main.LOGGER.info("Zoom Factor of {}", this.zoomFactor);
         this.repaint();
     }
 

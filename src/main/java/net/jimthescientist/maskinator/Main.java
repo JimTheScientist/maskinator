@@ -10,6 +10,8 @@ import org.apache.logging.log4j.core.config.Configurator;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Main {
     public static final Logger LOGGER = LogManager.getLogger("Maskinator");
@@ -23,10 +25,26 @@ public class Main {
         //frame.getContentPane().add(new ResinPrinter().getPanel(), BorderLayout.WEST);
         //frame.getContentPane().add(new ResinPrinter().getPanel(), BorderLayout.EAST);
         JMenuBar menuBar = new JMenuBar();
-        menuBar.add(new JMenu("File"));
-        frame.getContentPane().add(menuBar);
-        JPanel planner = new Planner();
-        frame.getContentPane().add(planner);
+        JMenu fileMenu = new JMenu("File");
+        JMenu windowMenu = new JMenu("Window");
+
+        JMenuItem plannerItem = new JMenuItem("Open Planner");
+        windowMenu.add(plannerItem);
+
+        plannerItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                JFrame blueprintPane = new JFrame("Planner");
+                JPanel planner = new Planner();
+                blueprintPane.getContentPane().add(planner);
+                blueprintPane.setSize(800, 600);
+                blueprintPane.setVisible(true);
+            }
+        });
+
+        menuBar.add(fileMenu);
+        menuBar.add(windowMenu);
+        frame.setJMenuBar(menuBar);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }

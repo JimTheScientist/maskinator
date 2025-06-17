@@ -21,7 +21,6 @@ public class Planner extends JPanel {
         zoomIn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                Main.LOGGER.info("Zoom in");
                 grid.zoom(2);
             }
         });
@@ -31,7 +30,6 @@ public class Planner extends JPanel {
         zoomOut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                Main.LOGGER.info("Zoom out");
                 grid.zoom(0.5);
             }
         });
