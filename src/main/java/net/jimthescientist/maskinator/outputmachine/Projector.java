@@ -4,12 +4,12 @@ import javax.swing.*;
 
 public class Projector extends OutputMachine{
     @Override
-    public int getHeight() {
+    public int getMaxHeight() {
         return 0;
     }
 
     @Override
-    public int getWidth() {
+    public int getMaxWidth() {
         return 0;
     }
 

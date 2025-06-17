@@ -1,7 +1,8 @@
 package net.jimthescientist.maskinator;
 
 
-import net.jimthescientist.maskinator.outputmachine.ResinPrinter;
+import net.jimthescientist.maskinator.mask.Grid;
+import net.jimthescientist.maskinator.mask.Planner;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
@@ -17,11 +18,15 @@ public class Main {
         LOGGER.info("Starting Maskinator...");
 
         JFrame frame = new JFrame("Maskinator 1.0");
-
         frame.setSize(800, 600);
         frame.getContentPane().setLayout(new BorderLayout());
-        frame.getContentPane().add(new ResinPrinter().getPanel(), BorderLayout.WEST);
-        frame.getContentPane().add(new ResinPrinter().getPanel(), BorderLayout.EAST);
+        //frame.getContentPane().add(new ResinPrinter().getPanel(), BorderLayout.WEST);
+        //frame.getContentPane().add(new ResinPrinter().getPanel(), BorderLayout.EAST);
+        JMenuBar menuBar = new JMenuBar();
+        menuBar.add(new JMenu("File"));
+        frame.getContentPane().add(menuBar);
+        JPanel planner = new Planner();
+        frame.getContentPane().add(planner);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
