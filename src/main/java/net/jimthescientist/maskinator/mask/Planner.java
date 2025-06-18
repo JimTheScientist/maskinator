@@ -1,6 +1,7 @@
 package net.jimthescientist.maskinator.mask;
 
 import net.jimthescientist.maskinator.Main;
+import net.jimthescientist.maskinator.outputmachine.ResinPrinter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -74,5 +75,33 @@ public class Planner extends JPanel {
         toolPanel.add(zoomOut);
         toolPanel.add(zoomIn);
         return toolPanel;
+    }
+
+    public static void CreatePlannerWindow() {
+        Main.LOGGER.info("Opening new Planner window");
+        JFrame plannerFrame = new JFrame("Planner");
+        plannerFrame.getContentPane().setLayout(new BorderLayout());
+        JMenuBar menuBar = new JMenuBar();
+        JMenu outputDevicesMenu = new JMenu("Output Devices");
+        JMenuItem resinPrinter = new JMenuItem("Resin Printer");
+
+        resinPrinter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                ResinPrinter resinPrinter = new ResinPrinter();
+                plannerFrame.getContentPane().add(resinPrinter.getPanel(), BorderLayout.EAST);
+                plannerFrame.getContentPane().revalidate();
+            }
+        });
+
+        outputDevicesMenu.add(resinPrinter);
+        menuBar.add(outputDevicesMenu);
+
+        plannerFrame.setJMenuBar(menuBar);
+
+        JPanel planner = new Planner();
+        plannerFrame.getContentPane().add(planner, BorderLayout.CENTER);
+        plannerFrame.setSize(800, 600);
+        plannerFrame.setVisible(true);
     }
 }

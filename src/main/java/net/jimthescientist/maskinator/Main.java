@@ -34,11 +34,7 @@ public class Main {
         plannerItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                JFrame blueprintPane = new JFrame("Planner");
-                JPanel planner = new Planner();
-                blueprintPane.getContentPane().add(planner);
-                blueprintPane.setSize(800, 600);
-                blueprintPane.setVisible(true);
+                Planner.CreatePlannerWindow();
             }
         });
 
