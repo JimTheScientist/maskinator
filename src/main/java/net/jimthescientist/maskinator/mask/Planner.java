@@ -1,13 +1,10 @@
 package net.jimthescientist.maskinator.mask;
 
-import net.jimthescientist.maskinator.Main;
-import net.jimthescientist.maskinator.outputmachine.ResinPrinter;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+// TODO Fix zooming in and out, as it doens't zoom around where you are looking!
 public class Planner extends JPanel {
     private final Grid grid = new Grid();
     public Planner() {
@@ -76,32 +73,7 @@ public class Planner extends JPanel {
         toolPanel.add(zoomIn);
         return toolPanel;
     }
-
-    public static void CreatePlannerWindow() {
-        Main.LOGGER.info("Opening new Planner window");
-        JFrame plannerFrame = new JFrame("Planner");
-        plannerFrame.getContentPane().setLayout(new BorderLayout());
-        JMenuBar menuBar = new JMenuBar();
-        JMenu outputDevicesMenu = new JMenu("Output Devices");
-        JMenuItem resinPrinter = new JMenuItem("Resin Printer");
-
-        resinPrinter.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                ResinPrinter resinPrinter = new ResinPrinter();
-                plannerFrame.getContentPane().add(resinPrinter.getPanel(), BorderLayout.EAST);
-                plannerFrame.getContentPane().revalidate();
-            }
-        });
-
-        outputDevicesMenu.add(resinPrinter);
-        menuBar.add(outputDevicesMenu);
-
-        plannerFrame.setJMenuBar(menuBar);
-
-        JPanel planner = new Planner();
-        plannerFrame.getContentPane().add(planner, BorderLayout.CENTER);
-        plannerFrame.setSize(800, 600);
-        plannerFrame.setVisible(true);
+    public Grid getGrid() {
+        return this.grid;
     }
 }

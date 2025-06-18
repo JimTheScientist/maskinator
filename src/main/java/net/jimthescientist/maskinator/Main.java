@@ -1,8 +1,6 @@
 package net.jimthescientist.maskinator;
 
-
-import net.jimthescientist.maskinator.mask.Grid;
-import net.jimthescientist.maskinator.mask.Planner;
+import net.jimthescientist.maskinator.mask.PlannerWindow;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
@@ -34,7 +32,7 @@ public class Main {
         plannerItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                Planner.CreatePlannerWindow();
+                new PlannerWindow();
             }
         });
 

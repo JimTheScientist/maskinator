@@ -8,14 +8,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
-import java.util.ArrayList;
-import java.util.Vector;
 
 public class Grid extends JPanel {
 
-    public ArrayList<Wafer> wafers;
-
-    public OutputMachine outputMachine;
+    private OutputMachine outputMachine;
 
     private double zoomFactor = 10;
 
@@ -43,9 +39,7 @@ public class Grid extends JPanel {
         }
         g2.transform(at);
 
-        g.setColor(new Color(0,0,0));
-        g.drawLine((int) (2*zoomFactor), (int) (0*zoomFactor), (int) (2*zoomFactor), (int) (10*zoomFactor));
-        g.drawLine((int) (3*zoomFactor), (int) (0*zoomFactor), (int) (3*zoomFactor), (int) (10*zoomFactor));
+        drawGridLines(g);
     }
 
     public void zoom(double factor) {
@@ -61,5 +55,42 @@ public class Grid extends JPanel {
     public void translateY(int y) {
         panY += y;
         this.repaint();
+    }
+
+    public void setOutputMachine(OutputMachine outputMachine) {
+        Main.LOGGER.info("setting the output machine");
+        this.outputMachine = outputMachine;
+        this.repaint();
+    }
+
+    private void drawGridLines(Graphics g) {
+        if (this.outputMachine == null) return;
+        g.setColor(new Color(0,0,0));
+        if (zoomFactor >= 10) {
+            for (int x = 0; x <= this.outputMachine.getMaxWidth(); x++) {
+                g.drawLine((int) (x*zoomFactor), (int) (0*zoomFactor), (int) (x*zoomFactor), (int) (this.outputMachine.getMaxHeight()*zoomFactor));
+            }
+            for (int y = 0; y <= this.outputMachine.getMaxHeight(); y++) {
+                g.drawLine((int) (0*zoomFactor), (int) (y*zoomFactor), (int) (this.outputMachine.getMaxWidth()*zoomFactor), (int) (y*zoomFactor));
+            }
+        } else {
+            g.drawLine((int) (0*zoomFactor), (int) (0*zoomFactor), (int) (0*zoomFactor), (int) (this.outputMachine.getMaxHeight()*zoomFactor));
+            g.drawLine((int) (0*zoomFactor), (int) (0*zoomFactor), (int) (this.outputMachine.getMaxWidth()*zoomFactor), (int) (0*zoomFactor));
+            g.drawLine((int) (this.outputMachine.getMaxWidth()*zoomFactor), (int) (0*zoomFactor), (int) (this.outputMachine.getMaxWidth()*zoomFactor), (int) (this.outputMachine.getMaxHeight()*zoomFactor));
+            g.drawLine((int) (0*zoomFactor), (int) (this.outputMachine.getMaxHeight()*zoomFactor), (int) (this.outputMachine.getMaxWidth()*zoomFactor), (int) (this.outputMachine.getMaxHeight()*zoomFactor));
+
+        }
+    }
+
+    private Wafer wafer;
+
+    public void setWafer(Wafer wafer) {
+        this.wafer = wafer;
+        this.repaint();
+    }
+
+    private void drawWafer(Graphics g) {
+        if (this.wafer == null) return;
+
     }
 }
