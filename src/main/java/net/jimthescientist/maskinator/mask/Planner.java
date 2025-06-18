@@ -36,7 +36,7 @@ public class Planner extends JPanel {
         panL.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                grid.translateX(100);
+                grid.translateX(-100);
             }
         });
 
@@ -44,7 +44,7 @@ public class Planner extends JPanel {
         panR.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                grid.translateX(-100);
+                grid.translateX(100);
             }
         });
 
@@ -52,7 +52,7 @@ public class Planner extends JPanel {
         panU.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                grid.translateY(-100);
+                grid.translateY(100);
             }
         });
 
@@ -60,7 +60,7 @@ public class Planner extends JPanel {
         panD.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                grid.translateY(100);
+                grid.translateY(-100);
             }
         });
 
