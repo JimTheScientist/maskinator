@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 public class Projector extends OutputMachine{
     private int maxHeight = 1080;
     private int maxWidth = 1920;
+    private double pixelSize = 0.1;
 
     @Override
     public int getMaxHeight() {
@@ -20,6 +21,11 @@ public class Projector extends OutputMachine{
     @Override
     public int getMaxWidth() {
         return maxWidth;
+    }
+
+    @Override
+    public double getPixelSize() {
+        return pixelSize;
     }
 
     @Override
@@ -78,14 +84,45 @@ public class Projector extends OutputMachine{
                 }
             }
         });
+
+        JTextField pixelSizeField = new JTextField("0.1", 4);
+        JLabel pixelSizeLabel = new JLabel("Pixel Size (mm): ");
+        pixelSizeField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent documentEvent) {
+                onUpdate();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent documentEvent) {
+                onUpdate();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent documentEvent) {
+                onUpdate();
+            }
+
+            public void onUpdate() {
+                try {
+                    pixelSize = Double.valueOf(pixelSizeField.getText());
+                } catch (Exception _){
+                }
+            }
+        });
+
         GridBagConstraints hCon = new GridBagConstraints();
         hCon.gridy = 1;
         GridBagConstraints wCon = new GridBagConstraints();
         wCon.gridy = 0;
+        GridBagConstraints pCon = new GridBagConstraints();
+        pCon.gridy = 2;
         hwPanel.add(heightText, hCon);
         hwPanel.add(heightField, hCon);
         hwPanel.add(widthText, wCon);
         hwPanel.add(widthField, wCon);
+        hwPanel.add(pixelSizeLabel, pCon);
+        hwPanel.add(pixelSizeField, pCon);
         panel.add(hwPanel, BorderLayout.NORTH);
         panel.setBackground(Color.white);
         panel.setBorder(BorderFactory.createLineBorder(Color.black));

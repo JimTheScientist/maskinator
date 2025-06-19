@@ -20,6 +20,11 @@ public class ResinPrinter extends OutputMachine {
     }
 
     @Override
+    public double getPixelSize() {
+        return 0.017;
+    }
+
+    @Override
     public JPanel getPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());

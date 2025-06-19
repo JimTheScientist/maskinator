@@ -6,10 +6,12 @@ import net.jimthescientist.maskinator.outputmachine.OutputMachine;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.NoninvertibleTransformException;
 
-public class Grid extends JPanel {
+public class Grid extends JPanel implements ActionListener {
 
     private OutputMachine outputMachine;
 
@@ -18,20 +20,28 @@ public class Grid extends JPanel {
     private int panX;
     private int panY;
 
+    public Grid() {
+        Timer timer = new Timer(17, this);
+        timer.start();
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         this.setBackground(new Color(0, 255, 0));
         Graphics2D g2 = (Graphics2D) g;
 
-        g2.translate(panX, panY);
+
+        g2.translate(getWidth()/2,getHeight()/2);
 
         AffineTransform at = new AffineTransform();
         at.scale(zoomFactor,zoomFactor);
         g2.transform(at);
+        g2.translate(-getWidth()/2,-getHeight()/2);
+        g2.translate(panX, panY);
         g.setColor(new Color(255,0,0));
-        g.drawLine(2,0,2,10);
-
+        //g.drawLine(2,0,2,10);
+        drawWafer(g);
         try {
             at.invert();
         } catch (NoninvertibleTransformException e) {
@@ -45,6 +55,10 @@ public class Grid extends JPanel {
     public void zoom(double factor) {
         this.zoomFactor *= factor;
         this.repaint();
+    }
+
+    public double getZoomFactor() {
+        return this.zoomFactor;
     }
 
     public void translateX(int x) {
@@ -91,6 +105,15 @@ public class Grid extends JPanel {
 
     private void drawWafer(Graphics g) {
         if (this.wafer == null) return;
+        if (this.outputMachine == null) return;
+        int x = (int) ((this.wafer.centerX)/this.outputMachine.getPixelSize() - (this.wafer.diameter/this.outputMachine.getPixelSize())/2);
+        int y = (int) ((this.wafer.centerY/this.outputMachine.getPixelSize()) - (this.wafer.diameter/this.outputMachine.getPixelSize())/2);
+        g.setColor(new Color(0,0,255));
+        g.drawOval(x, y, (int) (this.wafer.diameter/this.outputMachine.getPixelSize()), (int) (this.wafer.diameter/this.outputMachine.getPixelSize()));
+    }
 
+    @Override
+    public void actionPerformed(ActionEvent actionEvent) {
+        this.repaint();
     }
 }

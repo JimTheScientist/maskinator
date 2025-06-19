@@ -20,7 +20,6 @@ public class PlannerWindow extends JFrame {
         Main.LOGGER.info("Opening new Planner window");
         plannerFrame = new JFrame("Planner");
         plannerFrame.getContentPane().setLayout(new BorderLayout());
-        setWaferPanel();
         JMenuBar menuBar = new JMenuBar();
         JMenu outputDevicesMenu = new JMenu("Output Devices");
         JMenuItem resinPrinter = new JMenuItem("Resin Printer");
@@ -51,6 +50,7 @@ public class PlannerWindow extends JFrame {
         plannerFrame.setJMenuBar(menuBar);
 
         planner = new Planner();
+        setWaferPanel();
         plannerFrame.getContentPane().add(planner, BorderLayout.CENTER);
         plannerFrame.setSize(800, 600);
         plannerFrame.setVisible(true);
@@ -66,6 +66,7 @@ public class PlannerWindow extends JFrame {
     }
 
     public void setWaferPanel() {
+        planner.getGrid().setWafer(wafer);
         plannerFrame.getContentPane().add(wafer.getWaferSettings(), BorderLayout.WEST);
     }
 }

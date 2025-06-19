@@ -36,7 +36,7 @@ public class Planner extends JPanel {
         panL.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                grid.translateX(-100);
+                grid.translateX((int) (-100 / grid.getZoomFactor()));
             }
         });
 
@@ -44,7 +44,7 @@ public class Planner extends JPanel {
         panR.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                grid.translateX(100);
+                grid.translateX((int) (100 / grid.getZoomFactor()));
             }
         });
 
@@ -52,7 +52,7 @@ public class Planner extends JPanel {
         panU.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                grid.translateY(100);
+                grid.translateY((int) (100 / grid.getZoomFactor()));
             }
         });
 
@@ -60,11 +60,19 @@ public class Planner extends JPanel {
         panD.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                grid.translateY(-100);
+                grid.translateY((int) (-100 / grid.getZoomFactor()));
             }
         });
 
+        JButton refresh = new JButton("⟳");
+        refresh.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                grid.repaint();
+            }
+        });
 
+        toolPanel.add(refresh);
         toolPanel.add(panU);
         toolPanel.add(panD);
         toolPanel.add(panR);
