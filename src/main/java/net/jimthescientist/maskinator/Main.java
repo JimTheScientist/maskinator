@@ -1,5 +1,6 @@
 package net.jimthescientist.maskinator;
 
+import net.jimthescientist.maskinator.mask.BlueprintWindow;
 import net.jimthescientist.maskinator.mask.PlannerWindow;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
@@ -29,10 +30,21 @@ public class Main {
         JMenuItem plannerItem = new JMenuItem("Open Planner");
         windowMenu.add(plannerItem);
 
+        JMenuItem blueprintItem = new JMenuItem("Open Blueprint Editor");
+
+        windowMenu.add(blueprintItem);
+
         plannerItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 new PlannerWindow();
+            }
+        });
+
+        blueprintItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                new BlueprintWindow();
             }
         });
 

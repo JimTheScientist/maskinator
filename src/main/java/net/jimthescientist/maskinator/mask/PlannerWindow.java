@@ -10,8 +10,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class PlannerWindow extends JFrame {
+    public ArrayList<Layer> layers = new ArrayList<Layer>();
     private JPanel outputPanel;
     private final JFrame plannerFrame;
     private Wafer wafer = new Wafer();
