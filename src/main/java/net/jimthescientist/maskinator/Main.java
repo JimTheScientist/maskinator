@@ -2,6 +2,7 @@ package net.jimthescientist.maskinator;
 
 import net.jimthescientist.maskinator.mask.BlueprintWindow;
 import net.jimthescientist.maskinator.mask.PlannerWindow;
+import net.jimthescientist.maskinator.panel.MFileTree;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
@@ -11,9 +12,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 public class Main {
     public static final Logger LOGGER = LogManager.getLogger("Maskinator");
+    public static JScrollPane fileScrollPane = new JScrollPane(new MFileTree("./"));
     public static void main(String[] args) {
         Configurator.setLevel("Maskinator", Level.DEBUG);
         LOGGER.info("Starting Maskinator...");
@@ -25,6 +30,28 @@ public class Main {
         //frame.getContentPane().add(new ResinPrinter().getPanel(), BorderLayout.EAST);
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("File");
+
+        JMenuItem openFolder = new JMenuItem("Open Folder");
+
+        openFolder.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                JFileChooser jFileChooser = new JFileChooser();
+                jFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                 if (jFileChooser.showOpenDialog(frame) == JFileChooser.APPROVE_OPTION) {
+                     frame.getContentPane().remove(fileScrollPane);
+                     File file = jFileChooser.getSelectedFile();
+                     LOGGER.info("Opening folder {}", file.getAbsolutePath());
+                     fileScrollPane = new JScrollPane(new MFileTree(file.getAbsolutePath()));
+                     frame.getContentPane().add(fileScrollPane);
+                     frame.getContentPane().revalidate();
+                     frame.getContentPane().repaint();
+                 }
+            }
+        });
+
+        fileMenu.add(openFolder);
+
         JMenu windowMenu = new JMenu("Window");
 
         JMenuItem plannerItem = new JMenuItem("Open Planner");
@@ -50,6 +77,8 @@ public class Main {
 
         menuBar.add(fileMenu);
         menuBar.add(windowMenu);
+        frame.getContentPane().add(fileScrollPane);
+
         frame.setJMenuBar(menuBar);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
