@@ -13,8 +13,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
 
 public class Main {
     public static final Logger LOGGER = LogManager.getLogger("Maskinator");
