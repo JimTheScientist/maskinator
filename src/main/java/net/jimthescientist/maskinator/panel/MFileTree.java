@@ -14,7 +14,7 @@ public class MFileTree extends JTree {
         DefaultMutableTreeNode retNode = new DefaultMutableTreeNode(node.getName());
         if (node.isDirectory()) {
             for (File file : node.listFiles()) {
-                retNode.add(scan(file));
+                if (file.getName().substring(file.getName().lastIndexOf('.') + 1).equals("mskblp") || file.getName().substring(file.getName().lastIndexOf('.') + 1).equals("mskpln")) retNode.add(scan(file));
             }
         }
         return retNode;
