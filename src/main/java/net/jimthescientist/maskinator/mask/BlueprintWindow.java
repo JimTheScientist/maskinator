@@ -5,15 +5,22 @@ import net.jimthescientist.maskinator.outputmachine.BlueprintEditorMachine;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 public class BlueprintWindow {
     public Blueprint blueprint;
     public Planner planner = new Planner();
-    public BlueprintEditorMachine blueprintEditorMachine = new BlueprintEditorMachine();
+    public BlueprintEditorMachine blueprintEditorMachine;
 
-    public BlueprintWindow() {
+    public BlueprintWindow(File fileToOpen) {
+        this.blueprintEditorMachine = new BlueprintEditorMachine(fileToOpen);
         Main.LOGGER.info("Opening Blueprint Editor window");
-        JFrame blueprintFrame = new JFrame("Blueprint Editor");
+        JFrame blueprintFrame;
+        if (fileToOpen == null) {
+            blueprintFrame = new JFrame("Blueprint Editor - Untitled");
+        } else {
+            blueprintFrame = new JFrame("Blueprint Editor - " + fileToOpen.getName());
+        }
 
         blueprintFrame.getContentPane().setLayout(new BorderLayout());
 

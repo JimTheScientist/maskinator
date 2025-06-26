@@ -7,11 +7,17 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.File;
 
 public class BlueprintEditorMachine extends OutputMachine {
     private int height = 10;
     private int width = 10;
-    private String file;
+    private File file;
+
+    public BlueprintEditorMachine(File saveFile) {
+        this.file = saveFile;
+    }
+
     @Override
     public int getMaxHeight() {
         return height;
@@ -96,17 +102,37 @@ public class BlueprintEditorMachine extends OutputMachine {
         panel.add(hwPanel, BorderLayout.NORTH);
         panel.setBackground(Color.white);
         panel.setBorder(BorderFactory.createLineBorder(Color.black));
-        JButton exportButton = new JButton("Save");
-        exportButton.addActionListener(new AbstractAction() {
+        JButton saveButton = new JButton("Save");
+        saveButton.addActionListener(new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Main.LOGGER.info("Saving Blueprint Data");
+                if (file == null) {
+                    JFileChooser jFileChooser = new JFileChooser();
+                    jFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                    if (jFileChooser.showSaveDialog(panel) == JFileChooser.APPROVE_OPTION) {
+                        file = jFileChooser.getSelectedFile();
+                        String extension = file.getName().substring(file.getName().lastIndexOf('.') + 1);
+                        if (file.exists()) {
+                            JDialog overwriteDialog = new JDialog();
+                            overwriteDialog.getContentPane().add(new JLabel("Overwrite File?"));
+                            overwriteDialog.setVisible(true);
+                        } else {
+                            if (!extension.equals("mskblp")) {
+                                file = new File(file.getName() + ".mskblp");
+                                Main.LOGGER.info("Adding file extension .mskblp");
+                            }
+                        }
+                    }
+
+                }
                 Main.LOGGER.info("Height: {}", getMaxHeight());
                 Main.LOGGER.info("Width: {}", getMaxWidth());
-                Main.LOGGER.info("Saving to file {}", file);
+                Main.LOGGER.info("Saving to file {}", file.getAbsolutePath());
+                ((JFrame) SwingUtilities.windowForComponent(panel)).setTitle("Blueprint Editor - " + file.getName());
             }
         });
-        panel.add(exportButton, BorderLayout.SOUTH);
+        panel.add(saveButton, BorderLayout.SOUTH);
         return panel;
     }
 }

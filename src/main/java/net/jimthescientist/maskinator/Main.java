@@ -69,7 +69,7 @@ public class Main {
         blueprintItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                new BlueprintWindow();
+                new BlueprintWindow(null);
             }
         });
 
